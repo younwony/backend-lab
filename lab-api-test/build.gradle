@@ -1,0 +1,19 @@
+// API 테스트 모듈
+// 외부 API 호출, REST Client 테스트, HTTP 통신 검증
+
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(':lab-common')
+
+    // Spring Web for REST Client
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // WebClient (Reactive)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Test
+    testImplementation 'com.squareup.okhttp3:mockwebserver'
+}

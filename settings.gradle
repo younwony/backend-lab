@@ -1,0 +1,13 @@
+rootProject.name = 'backend-lab'
+
+// 공통 모듈
+include 'lab-common'
+
+// API 테스트 모듈 - 외부 API 호출, REST Client 테스트
+include 'lab-api-test'
+
+// 라이브러리 샌드박스 - 새로운 라이브러리 검증 및 PoC
+include 'lab-library-sandbox'
+
+// 아키텍처 패턴 - 디자인 패턴, 아키텍처 패턴 구현 및 테스트
+include 'lab-architecture-patterns'
