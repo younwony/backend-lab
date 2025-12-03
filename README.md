@@ -20,19 +20,19 @@ backend-lab/
 ├── build.gradle                    # 루트 빌드 설정 (공통 설정)
 ├── settings.gradle                 # 서브 모듈 등록
 │
-├── lab-common/                     # 공통 유틸리티 모듈
+├── common/                         # 공통 유틸리티 모듈
 │   ├── build.gradle
 │   └── src/
 │
-├── lab-api-test/                   # API 테스트 모듈
+├── api-test/                       # API 테스트 모듈
 │   ├── build.gradle
 │   └── src/
 │
-├── lab-library-sandbox/            # 라이브러리 샌드박스 모듈
+├── library-sandbox/                # 라이브러리 샌드박스 모듈
 │   ├── build.gradle
 │   └── src/
 │
-└── lab-architecture-patterns/      # 아키텍처 패턴 모듈
+└── architecture-patterns/          # 아키텍처 패턴 모듈
     ├── build.gradle
     └── src/
 ```
@@ -41,10 +41,10 @@ backend-lab/
 
 | 모듈 | 설명 | 주요 용도 |
 |------|------|----------|
-| [lab-common](./lab-common/README.md) | 공통 유틸리티 | 여러 모듈에서 공유하는 헬퍼, 유틸리티 클래스 |
-| [lab-api-test](./lab-api-test/README.md) | API 테스트 | 외부 API 호출, REST Client 테스트, HTTP 통신 패턴 |
-| [lab-library-sandbox](./lab-library-sandbox/README.md) | 라이브러리 샌드박스 | 새로운 라이브러리 검증, PoC, 벤치마크 |
-| [lab-architecture-patterns](./lab-architecture-patterns/README.md) | 아키텍처 패턴 | 디자인 패턴, 아키텍처 패턴, DDD 실험 |
+| [common](./common/README.md) | 공통 유틸리티 | 여러 모듈에서 공유하는 헬퍼, 유틸리티 클래스 |
+| [api-test](./api-test/README.md) | API 테스트 | 외부 API 호출, REST Client 테스트, HTTP 통신 패턴 |
+| [library-sandbox](./library-sandbox/README.md) | 라이브러리 샌드박스 | 새로운 라이브러리 검증, PoC, 벤치마크 |
+| [architecture-patterns](./architecture-patterns/README.md) | 아키텍처 패턴 | 디자인 패턴, 아키텍처 패턴, DDD 실험 |
 
 ## 기술 스택
 
@@ -67,13 +67,13 @@ backend-lab/
 ./gradlew build
 
 # 특정 모듈만 빌드
-./gradlew :lab-api-test:build
+./gradlew :api-test:build
 
 # 테스트 실행
 ./gradlew test
 
 # 특정 모듈 테스트
-./gradlew :lab-library-sandbox:test
+./gradlew :library-sandbox:test
 ```
 
 ### IntelliJ에서 열기
@@ -87,25 +87,25 @@ backend-lab/
 
 1. 모듈 디렉토리 생성:
 ```bash
-mkdir -p lab-new-module/src/main/java/dev/wony/backendlab/newmodule
-mkdir -p lab-new-module/src/test/java/dev/wony/backendlab/newmodule
+mkdir -p new-module/src/main/java/dev/wony/backendlab/newmodule
+mkdir -p new-module/src/test/java/dev/wony/backendlab/newmodule
 ```
 
-2. `lab-new-module/build.gradle` 작성:
+2. `new-module/build.gradle` 작성:
 ```groovy
 plugins {
     id 'org.springframework.boot'
 }
 
 dependencies {
-    implementation project(':lab-common')
+    implementation project(':common')
     // 필요한 의존성 추가
 }
 ```
 
 3. `settings.gradle`에 모듈 등록:
 ```groovy
-include 'lab-new-module'
+include 'new-module'
 ```
 
 4. Gradle 새로고침

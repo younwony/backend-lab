@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(':lab-common')
+    implementation project(':common')
 
     // Spring Web for REST Client
     implementation 'org.springframework.boot:spring-boot-starter-web'
