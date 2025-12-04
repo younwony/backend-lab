@@ -7,7 +7,8 @@
       "Bash(tree:*)",
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" log --oneline -10)",
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" diff HEAD~1 HEAD --stat)",
-      "Bash(./gradlew :common:test:*)"
+      "Bash(./gradlew :common:test:*)",
+      "Bash(./gradlew :architecture-patterns:test:*)"
     ],
     "deny": [],
     "ask": []
