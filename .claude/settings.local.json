@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(find \"C:\\workspace\\intellij\\backend-lab\" -type f -name \"build.gradle\" -exec sh -c 'echo \"\"=== {} ===\"\" && cat \"\"{}\"\"' ;)",
+      "Bash(tree:*)",
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" log --oneline -10)",
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" diff HEAD~1 HEAD --stat)",
+      "Bash(./gradlew :common:test:*)"
     ],
     "deny": [],
     "ask": []
