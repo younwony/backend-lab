@@ -1,5 +1,6 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.entity;
 
+import com.google.common.collect.ImmutableList;
 import dev.wony.backendlab.patterns.ddd.product.domain.event.DomainEvent;
 import dev.wony.backendlab.patterns.ddd.product.domain.event.ProductCreatedEvent;
 import dev.wony.backendlab.patterns.ddd.product.domain.event.ProductPriceChangedEvent;
@@ -11,9 +12,10 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * 상품 Aggregate Root.
@@ -64,10 +66,10 @@ public class Product {
      */
     public static Product create(ProductName name, String description,
                                   Money price, Quantity stockQuantity, CategoryId categoryId) {
-        Objects.requireNonNull(name, "상품명은 필수입니다");
-        Objects.requireNonNull(price, "가격은 필수입니다");
-        Objects.requireNonNull(stockQuantity, "재고 수량은 필수입니다");
-        Objects.requireNonNull(categoryId, "카테고리는 필수입니다");
+        checkNotNull(name, "상품명은 필수입니다");
+        checkNotNull(price, "가격은 필수입니다");
+        checkNotNull(stockQuantity, "재고 수량은 필수입니다");
+        checkNotNull(categoryId, "카테고리는 필수입니다");
 
         Product product = new Product(
                 ProductId.generate(),
@@ -107,13 +109,9 @@ public class Product {
      * @throws IllegalStateException 판매 시작 불가 상태인 경우
      */
     public void startSelling() {
-        if (this.status != ProductStatus.PENDING) {
-            throw new IllegalStateException(
-                    String.format("판매대기 상태에서만 판매를 시작할 수 있습니다. 현재 상태: %s", status));
-        }
-        if (this.stockQuantity.isZero()) {
-            throw new IllegalStateException("재고가 없어 판매를 시작할 수 없습니다");
-        }
+        checkState(this.status == ProductStatus.PENDING,
+                "판매대기 상태에서만 판매를 시작할 수 있습니다. 현재 상태: %s", status);
+        checkState(!this.stockQuantity.isZero(), "재고가 없어 판매를 시작할 수 없습니다");
         this.status = ProductStatus.ON_SALE;
         this.updatedAt = LocalDateTime.now();
     }
@@ -136,7 +134,7 @@ public class Product {
      * @throws IllegalArgumentException 가격이 null인 경우
      */
     public void changePrice(Money newPrice) {
-        Objects.requireNonNull(newPrice, "가격은 null일 수 없습니다");
+        checkNotNull(newPrice, "가격은 null일 수 없습니다");
 
         if (this.price.equals(newPrice)) {
             return; // 가격이 같으면 변경하지 않음
@@ -155,7 +153,7 @@ public class Product {
      * @param quantity 추가할 수량
      */
     public void addStock(Quantity quantity) {
-        Objects.requireNonNull(quantity, "수량은 null일 수 없습니다");
+        checkNotNull(quantity, "수량은 null일 수 없습니다");
 
         Quantity oldQuantity = this.stockQuantity;
         this.stockQuantity = this.stockQuantity.add(quantity);
@@ -177,12 +175,8 @@ public class Product {
      * @throws IllegalArgumentException 재고가 부족한 경우
      */
     public void decreaseStock(Quantity quantity) {
-        Objects.requireNonNull(quantity, "수량은 null일 수 없습니다");
-
-        if (!this.status.isSellable()) {
-            throw new IllegalStateException(
-                    String.format("판매 불가 상태입니다. 현재 상태: %s", status));
-        }
+        checkNotNull(quantity, "수량은 null일 수 없습니다");
+        checkState(this.status.isSellable(), "판매 불가 상태입니다. 현재 상태: %s", status);
 
         Quantity oldQuantity = this.stockQuantity;
         this.stockQuantity = this.stockQuantity.subtract(quantity);
@@ -203,8 +197,7 @@ public class Product {
      * @param description 새 설명
      */
     public void updateInfo(ProductName name, String description) {
-        Objects.requireNonNull(name, "상품명은 null일 수 없습니다");
-
+        checkNotNull(name, "상품명은 null일 수 없습니다");
         this.name = name;
         this.description = description;
         this.updatedAt = LocalDateTime.now();
@@ -216,8 +209,7 @@ public class Product {
      * @param categoryId 새 카테고리 ID
      */
     public void changeCategory(CategoryId categoryId) {
-        Objects.requireNonNull(categoryId, "카테고리는 null일 수 없습니다");
-
+        checkNotNull(categoryId, "카테고리는 null일 수 없습니다");
         this.categoryId = categoryId;
         this.updatedAt = LocalDateTime.now();
     }
@@ -245,9 +237,9 @@ public class Product {
      * @return 도메인 이벤트 목록
      */
     public List<DomainEvent> pullDomainEvents() {
-        List<DomainEvent> events = new ArrayList<>(domainEvents);
+        List<DomainEvent> events = ImmutableList.copyOf(domainEvents);
         domainEvents.clear();
-        return Collections.unmodifiableList(events);
+        return events;
     }
 
 }

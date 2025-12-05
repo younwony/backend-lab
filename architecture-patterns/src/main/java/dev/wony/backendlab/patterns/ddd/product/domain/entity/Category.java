@@ -4,8 +4,11 @@ import dev.wony.backendlab.patterns.ddd.product.domain.vo.CategoryId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * 카테고리 Entity.
@@ -73,12 +76,8 @@ public class Category {
     }
 
     private static void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("카테고리명은 필수입니다");
-        }
-        if (name.trim().length() > 50) {
-            throw new IllegalArgumentException("카테고리명은 50자를 초과할 수 없습니다");
-        }
+        checkArgument(StringUtils.isNotBlank(name), "카테고리명은 필수입니다");
+        checkArgument(name.trim().length() <= 50, "카테고리명은 50자를 초과할 수 없습니다");
     }
 
     /**
@@ -100,9 +99,7 @@ public class Category {
      * @param displayOrder 새 표시 순서
      */
     public void changeDisplayOrder(int displayOrder) {
-        if (displayOrder < 0) {
-            throw new IllegalArgumentException("표시 순서는 0 이상이어야 합니다");
-        }
+        checkArgument(displayOrder >= 0, "표시 순서는 0 이상이어야 합니다");
         this.displayOrder = displayOrder;
         this.updatedAt = LocalDateTime.now();
     }
@@ -113,10 +110,8 @@ public class Category {
      * @param parentId 새 상위 카테고리 ID
      */
     public void changeParent(CategoryId parentId) {
-        // 자기 자신을 부모로 설정 불가
-        if (parentId != null && parentId.equals(this.id)) {
-            throw new IllegalArgumentException("자기 자신을 상위 카테고리로 설정할 수 없습니다");
-        }
+        checkArgument(parentId == null || !parentId.equals(this.id),
+                "자기 자신을 상위 카테고리로 설정할 수 없습니다");
         this.parentId = parentId;
         this.updatedAt = LocalDateTime.now();
     }

@@ -3,9 +3,13 @@ package dev.wony.backendlab.patterns.ddd.product.domain.service;
 import dev.wony.backendlab.patterns.ddd.product.domain.entity.Product;
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.Money;
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.Quantity;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.Range;
 
 import java.util.List;
-import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 상품 도메인 서비스.
@@ -13,7 +17,10 @@ import java.util.Objects;
  * DDD에서 Domain Service는 특정 Entity나 Value Object에 속하지 않는
  * 도메인 로직을 담당합니다. 주로 여러 Aggregate에 걸친 비즈니스 로직을 처리합니다.
  */
+@RequiredArgsConstructor
 public class ProductDomainService {
+
+    private static final Range<Integer> DISCOUNT_RANGE = Range.of(0, 100);
 
     /**
      * 총 주문 금액 계산
@@ -26,9 +33,8 @@ public class ProductDomainService {
      * @return 총 금액
      */
     public Money calculateTotalPrice(Product product, Quantity quantity) {
-        Objects.requireNonNull(product, "상품은 null일 수 없습니다");
-        Objects.requireNonNull(quantity, "수량은 null일 수 없습니다");
-
+        checkNotNull(product, "상품은 null일 수 없습니다");
+        checkNotNull(quantity, "수량은 null일 수 없습니다");
         return product.getPrice().multiply(quantity.getValue());
     }
 
@@ -39,8 +45,7 @@ public class ProductDomainService {
      * @return 총 금액
      */
     public Money calculateTotalPrice(List<OrderItem> items) {
-        Objects.requireNonNull(items, "주문 항목은 null일 수 없습니다");
-
+        checkNotNull(items, "주문 항목은 null일 수 없습니다");
         return items.stream()
                 .map(item -> calculateTotalPrice(item.product(), item.quantity()))
                 .reduce(Money.ZERO, Money::add);
@@ -54,16 +59,13 @@ public class ProductDomainService {
      * @return 할인된 가격
      */
     public Money applyDiscount(Money originalPrice, int discountPercent) {
-        Objects.requireNonNull(originalPrice, "가격은 null일 수 없습니다");
-
-        if (discountPercent < 0 || discountPercent > 100) {
-            throw new IllegalArgumentException("할인율은 0-100 사이여야 합니다: " + discountPercent);
-        }
+        checkNotNull(originalPrice, "가격은 null일 수 없습니다");
+        checkArgument(DISCOUNT_RANGE.contains(discountPercent),
+                "할인율은 0-100 사이여야 합니다: %s", discountPercent);
 
         if (discountPercent == 0) {
             return originalPrice;
         }
-
         if (discountPercent == 100) {
             return Money.ZERO;
         }
@@ -85,8 +87,7 @@ public class ProductDomainService {
      * @return 모두 주문 가능하면 true
      */
     public boolean canOrderAll(List<OrderItem> items) {
-        Objects.requireNonNull(items, "주문 항목은 null일 수 없습니다");
-
+        checkNotNull(items, "주문 항목은 null일 수 없습니다");
         return items.stream()
                 .allMatch(item -> item.product().canOrder(item.quantity()));
     }
@@ -99,8 +100,8 @@ public class ProductDomainService {
      */
     public record OrderItem(Product product, Quantity quantity) {
         public OrderItem {
-            Objects.requireNonNull(product, "상품은 null일 수 없습니다");
-            Objects.requireNonNull(quantity, "수량은 null일 수 없습니다");
+            checkNotNull(product, "상품은 null일 수 없습니다");
+            checkNotNull(quantity, "수량은 null일 수 없습니다");
         }
     }
 }

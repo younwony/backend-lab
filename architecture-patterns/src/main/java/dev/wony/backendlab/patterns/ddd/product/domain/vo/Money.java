@@ -5,7 +5,9 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 금액을 나타내는 Value Object.
@@ -33,12 +35,8 @@ public final class Money {
      * @throws IllegalArgumentException 금액이 null이거나 음수인 경우
      */
     public static Money of(BigDecimal amount) {
-        if (amount == null) {
-            throw new IllegalArgumentException("금액은 null일 수 없습니다");
-        }
-        if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("금액은 음수일 수 없습니다: " + amount);
-        }
+        checkNotNull(amount, "금액은 null일 수 없습니다");
+        checkArgument(amount.compareTo(BigDecimal.ZERO) >= 0, "금액은 음수일 수 없습니다: %s", amount);
         return new Money(amount);
     }
 
@@ -59,7 +57,7 @@ public final class Money {
      * @return 새로운 Money 인스턴스
      */
     public Money add(Money other) {
-        Objects.requireNonNull(other, "더할 금액은 null일 수 없습니다");
+        checkNotNull(other, "더할 금액은 null일 수 없습니다");
         return new Money(this.amount.add(other.amount));
     }
 
@@ -71,11 +69,9 @@ public final class Money {
      * @throws IllegalArgumentException 결과가 음수가 되는 경우
      */
     public Money subtract(Money other) {
-        Objects.requireNonNull(other, "뺄 금액은 null일 수 없습니다");
+        checkNotNull(other, "뺄 금액은 null일 수 없습니다");
         BigDecimal result = this.amount.subtract(other.amount);
-        if (result.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("결과 금액이 음수가 됩니다");
-        }
+        checkArgument(result.compareTo(BigDecimal.ZERO) >= 0, "결과 금액이 음수가 됩니다");
         return new Money(result);
     }
 
@@ -86,9 +82,7 @@ public final class Money {
      * @return 새로운 Money 인스턴스
      */
     public Money multiply(int multiplier) {
-        if (multiplier < 0) {
-            throw new IllegalArgumentException("곱하는 수는 음수일 수 없습니다");
-        }
+        checkArgument(multiplier >= 0, "곱하는 수는 음수일 수 없습니다");
         return new Money(this.amount.multiply(BigDecimal.valueOf(multiplier)));
     }
 

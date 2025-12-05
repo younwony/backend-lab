@@ -2,8 +2,9 @@ package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.Objects;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * 상품명을 나타내는 Value Object.
@@ -36,18 +37,10 @@ public final class ProductName {
     }
 
     private static void validate(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("상품명은 필수입니다");
-        }
+        checkArgument(StringUtils.isNotBlank(value), "상품명은 필수입니다");
         String trimmed = value.trim();
-        if (trimmed.length() < MIN_LENGTH) {
-            throw new IllegalArgumentException(
-                    String.format("상품명은 최소 %d자 이상이어야 합니다", MIN_LENGTH));
-        }
-        if (trimmed.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException(
-                    String.format("상품명은 최대 %d자까지 가능합니다", MAX_LENGTH));
-        }
+        checkArgument(trimmed.length() >= MIN_LENGTH, "상품명은 최소 %s자 이상이어야 합니다", MIN_LENGTH);
+        checkArgument(trimmed.length() <= MAX_LENGTH, "상품명은 최대 %s자까지 가능합니다", MAX_LENGTH);
     }
 
     @Override

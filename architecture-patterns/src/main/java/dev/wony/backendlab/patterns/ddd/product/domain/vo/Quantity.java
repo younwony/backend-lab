@@ -3,7 +3,8 @@ package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import java.util.Objects;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * 수량을 나타내는 Value Object.
@@ -30,9 +31,7 @@ public final class Quantity {
      * @throws IllegalArgumentException 수량이 음수인 경우
      */
     public static Quantity of(int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("수량은 음수일 수 없습니다: " + value);
-        }
+        checkArgument(value >= 0, "수량은 음수일 수 없습니다: %s", value);
         return new Quantity(value);
     }
 
@@ -43,7 +42,7 @@ public final class Quantity {
      * @return 새로운 Quantity 인스턴스
      */
     public Quantity add(Quantity other) {
-        Objects.requireNonNull(other, "더할 수량은 null일 수 없습니다");
+        checkNotNull(other, "더할 수량은 null일 수 없습니다");
         return new Quantity(this.value + other.value);
     }
 
@@ -55,12 +54,9 @@ public final class Quantity {
      * @throws IllegalArgumentException 결과가 음수가 되는 경우
      */
     public Quantity subtract(Quantity other) {
-        Objects.requireNonNull(other, "뺄 수량은 null일 수 없습니다");
+        checkNotNull(other, "뺄 수량은 null일 수 없습니다");
         int result = this.value - other.value;
-        if (result < 0) {
-            throw new IllegalArgumentException(
-                    String.format("재고가 부족합니다. 현재: %d, 요청: %d", this.value, other.value));
-        }
+        checkArgument(result >= 0, "재고가 부족합니다. 현재: %s, 요청: %s", this.value, other.value);
         return new Quantity(result);
     }
 

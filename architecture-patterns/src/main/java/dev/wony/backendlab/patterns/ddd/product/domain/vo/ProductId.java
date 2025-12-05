@@ -2,8 +2,11 @@ package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * 상품 식별자를 나타내는 Value Object.
@@ -37,9 +40,7 @@ public final class ProductId {
      * @throws IllegalArgumentException ID가 null이거나 빈 문자열인 경우
      */
     public static ProductId of(String value) {
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("상품 ID는 필수입니다");
-        }
+        checkArgument(StringUtils.isNotBlank(value), "상품 ID는 필수입니다");
         return new ProductId(value);
     }
 

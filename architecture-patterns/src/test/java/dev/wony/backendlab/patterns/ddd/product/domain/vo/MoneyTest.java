@@ -39,7 +39,7 @@ class MoneyTest {
         @Test
         @DisplayName("null로 생성시 예외")
         void create_null_throwsException() {
-            assertThrows(IllegalArgumentException.class,
+            assertThrows(NullPointerException.class,
                     () -> Money.of((BigDecimal) null));
         }
 

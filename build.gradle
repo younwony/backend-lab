@@ -36,6 +36,13 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
 
+        // Apache Commons (null-safe utilities)
+        implementation 'org.apache.commons:commons-lang3:3.14.0'
+        implementation 'org.apache.commons:commons-collections4:4.4'
+
+        // Google Guava (immutable collections, preconditions)
+        implementation 'com.google.guava:guava:33.0.0-jre'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
