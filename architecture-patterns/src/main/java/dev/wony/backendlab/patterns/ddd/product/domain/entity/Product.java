@@ -5,6 +5,9 @@ import dev.wony.backendlab.patterns.ddd.product.domain.event.ProductCreatedEvent
 import dev.wony.backendlab.patterns.ddd.product.domain.event.ProductPriceChangedEvent;
 import dev.wony.backendlab.patterns.ddd.product.domain.event.ProductStockChangedEvent;
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +21,9 @@ import java.util.Objects;
  * DDD에서 Aggregate Root는 일관성 경계의 진입점입니다.
  * 모든 상태 변경은 Aggregate Root를 통해서만 이루어져야 합니다.
  */
+@Getter
+@EqualsAndHashCode(of = "id")
+@ToString(of = {"id", "name", "price", "status"})
 public class Product {
 
     private final ProductId id;
@@ -244,60 +250,4 @@ public class Product {
         return Collections.unmodifiableList(events);
     }
 
-    // Getters
-
-    public ProductId getId() {
-        return id;
-    }
-
-    public ProductName getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Money getPrice() {
-        return price;
-    }
-
-    public Quantity getStockQuantity() {
-        return stockQuantity;
-    }
-
-    public CategoryId getCategoryId() {
-        return categoryId;
-    }
-
-    public ProductStatus getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Product{id=%s, name=%s, price=%s, status=%s}",
-                id, name, price, status);
-    }
 }

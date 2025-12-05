@@ -2,12 +2,16 @@ package dev.wony.backendlab.patterns.ddd.product.domain.event;
 
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.ProductId;
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.Quantity;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 상품 재고 변경 이벤트.
  * <p>
  * 상품 재고가 증가하거나 감소했을 때 발행됩니다.
  */
+@Getter
+@ToString(callSuper = true)
 public final class ProductStockChangedEvent extends AbstractDomainEvent {
 
     private final ProductId productId;
@@ -20,18 +24,6 @@ public final class ProductStockChangedEvent extends AbstractDomainEvent {
         this.productId = productId;
         this.previousQuantity = previousQuantity;
         this.currentQuantity = currentQuantity;
-    }
-
-    public ProductId getProductId() {
-        return productId;
-    }
-
-    public Quantity getPreviousQuantity() {
-        return previousQuantity;
-    }
-
-    public Quantity getCurrentQuantity() {
-        return currentQuantity;
     }
 
     /**
@@ -61,11 +53,5 @@ public final class ProductStockChangedEvent extends AbstractDomainEvent {
      */
     public boolean isOutOfStock() {
         return currentQuantity.isZero();
-    }
-
-    @Override
-    public String toString() {
-        return String.format("ProductStockChangedEvent{productId=%s, previousQuantity=%s, currentQuantity=%s}",
-                productId, previousQuantity, currentQuantity);
     }
 }

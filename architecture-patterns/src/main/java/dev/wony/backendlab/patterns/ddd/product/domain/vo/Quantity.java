@@ -1,5 +1,8 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.util.Objects;
 
 /**
@@ -7,6 +10,8 @@ import java.util.Objects;
  * <p>
  * 재고 수량, 주문 수량 등에 사용됩니다.
  */
+@Getter
+@EqualsAndHashCode
 public final class Quantity {
 
     public static final Quantity ZERO = new Quantity(0);
@@ -85,23 +90,6 @@ public final class Quantity {
      */
     public boolean isPositive() {
         return this.value > 0;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Quantity quantity = (Quantity) o;
-        return value == quantity.value;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 
     @Override

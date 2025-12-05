@@ -1,11 +1,15 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.util.UUID;
 
 /**
  * 카테고리 식별자를 나타내는 Value Object.
  */
+@Getter
+@EqualsAndHashCode
 public final class CategoryId {
 
     private final String value;
@@ -35,23 +39,6 @@ public final class CategoryId {
             throw new IllegalArgumentException("카테고리 ID는 필수입니다");
         }
         return new CategoryId(value);
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CategoryId that = (CategoryId) o;
-        return Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 
     @Override

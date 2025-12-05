@@ -1,9 +1,11 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.entity;
 
 import dev.wony.backendlab.patterns.ddd.product.domain.vo.CategoryId;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * 카테고리 Entity.
@@ -11,6 +13,9 @@ import java.util.Objects;
  * 상품이 속하는 카테고리를 나타냅니다.
  * 별도의 Aggregate Root로 관리됩니다.
  */
+@Getter
+@EqualsAndHashCode(of = "id")
+@ToString(of = {"id", "name", "active"})
 public class Category {
 
     private final CategoryId id;
@@ -141,55 +146,4 @@ public class Category {
         return parentId == null;
     }
 
-    // Getters
-
-    public CategoryId getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public CategoryId getParentId() {
-        return parentId;
-    }
-
-    public int getDisplayOrder() {
-        return displayOrder;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Category{id=%s, name='%s', active=%s}", id, name, active);
-    }
 }

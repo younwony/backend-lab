@@ -1,5 +1,8 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.util.Objects;
 
 /**
@@ -7,6 +10,8 @@ import java.util.Objects;
  * <p>
  * 상품명에 대한 유효성 검증 로직을 캡슐화합니다.
  */
+@Getter
+@EqualsAndHashCode
 public final class ProductName {
 
     private static final int MIN_LENGTH = 2;
@@ -43,23 +48,6 @@ public final class ProductName {
             throw new IllegalArgumentException(
                     String.format("상품명은 최대 %d자까지 가능합니다", MAX_LENGTH));
         }
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductName that = (ProductName) o;
-        return Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 
     @Override

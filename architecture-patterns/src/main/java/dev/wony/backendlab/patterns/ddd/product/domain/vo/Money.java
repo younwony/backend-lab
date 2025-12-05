@@ -1,5 +1,8 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
@@ -10,6 +13,8 @@ import java.util.Objects;
  * 불변 객체로 설계되어 있으며, 금액 관련 연산을 제공합니다.
  * DDD에서 Value Object는 식별자가 없고 속성 값으로만 동등성을 판단합니다.
  */
+@Getter
+@EqualsAndHashCode
 public final class Money {
 
     public static final Money ZERO = new Money(BigDecimal.ZERO);
@@ -114,23 +119,6 @@ public final class Money {
      */
     public boolean isZero() {
         return this.amount.compareTo(BigDecimal.ZERO) == 0;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Money money = (Money) o;
-        return amount.compareTo(money.amount) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(amount);
     }
 
     @Override

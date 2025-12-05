@@ -1,6 +1,8 @@
 package dev.wony.backendlab.patterns.ddd.product.domain.vo;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 import java.util.UUID;
 
 /**
@@ -8,6 +10,8 @@ import java.util.UUID;
  * <p>
  * Entity의 식별자를 Value Object로 감싸서 타입 안전성을 확보합니다.
  */
+@Getter
+@EqualsAndHashCode
 public final class ProductId {
 
     private final String value;
@@ -37,23 +41,6 @@ public final class ProductId {
             throw new IllegalArgumentException("상품 ID는 필수입니다");
         }
         return new ProductId(value);
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductId productId = (ProductId) o;
-        return Objects.equals(value, productId.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
     }
 
     @Override

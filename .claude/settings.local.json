@@ -8,7 +8,12 @@
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" log --oneline -10)",
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" diff HEAD~1 HEAD --stat)",
       "Bash(./gradlew :common:test:*)",
-      "Bash(./gradlew :architecture-patterns:test:*)"
+      "Bash(./gradlew :architecture-patterns:test:*)",
+      "Bash(C:)",
+      "Bash(gradlew.bat :architecture-patterns:test:*)",
+      "Bash(cmd.exe /c \"cd /d C:\\workspace\\intellij\\backend-lab && gradlew.bat :architecture-patterns:test --no-daemon\")",
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" status --short)",
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add build.gradle architecture-patterns/src/main/java/dev/wony/backendlab/patterns/ddd/product/domain/)"
     ],
     "deny": [],
     "ask": []
