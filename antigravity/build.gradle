@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.wony'
+version = '0.0.1-SNAPSHOT'
+description = 'antigravity - Static Website'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// 정적 웹사이트 프로젝트이므로 의존성이 거의 없습니다
+dependencies {
+}

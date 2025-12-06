@@ -11,3 +11,15 @@ include 'library-sandbox'
 
 // 아키텍처 패턴 - 디자인 패턴, 아키텍처 패턴 구현 및 테스트
 include 'architecture-patterns'
+
+// 매크로 - 웹 자동화 매크로
+include 'macro'
+
+// 게시판 - Spring Boot 기반 게시판 애플리케이션
+include 'board'
+
+// Claude Code 웹앱 - 계절별 테마 웹 애플리케이션
+include 'claude-code'
+
+// Antigravity - 정적 웹사이트
+include 'antigravity'

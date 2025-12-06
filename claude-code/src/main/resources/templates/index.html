@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈 - Spring Boot 웹 애플리케이션</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body th:class="${season}">
+    <div class="container">
+        <header>
+            <h1>Spring Boot 웹 애플리케이션</h1>
+            <nav>
+                <a href="/">홈</a>
+                <a href="/about">소개</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="welcome-section">
+                <h2 th:text="${message}">환영 메시지</h2>
+                <p class="current-time">
+                    현재 시간: <span id="clock" th:text="${currentTime}">2024-01-01 00:00:00</span>
+                </p>
+                <p style="margin-top: 15px; font-size: 1.1rem; color: #667eea;">
+                    현재 계절: <strong th:text="${seasonName}">계절</strong>
+                </p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Spring Boot</h3>
+                    <p>강력하고 빠른 Java 프레임워크로 웹 애플리케이션을 쉽게 구축할 수 있습니다.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Thymeleaf</h3>
+                    <p>자연스러운 템플릿 엔진으로 HTML을 동적으로 렌더링합니다.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Maven</h3>
+                    <p>의존성 관리와 빌드 자동화를 제공합니다.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; <span th:text="${#temporals.year(#temporals.createNow())}">2024</span> Spring Boot 웹 애플리케이션. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 실시간 시계 업데이트 함수
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const timeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // 페이지 로드 시 즉시 실행
+        updateClock();
+
+        // 1초마다 시계 업데이트
+        setInterval(updateClock, 1000);
+    </script>
+    <script th:src="@{/js/seasonal-animation.js}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소개 - Spring Boot 웹 애플리케이션</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body th:class="${season}">
+    <div class="container">
+        <header>
+            <h1>Spring Boot 웹 애플리케이션</h1>
+            <nav>
+                <a href="/">홈</a>
+                <a href="/about">소개</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="about-section">
+                <h2 th:text="${title}">소개</h2>
+                <p th:text="${description}">애플리케이션 설명</p>
+
+                <div class="tech-stack">
+                    <h3>기술 스택</h3>
+                    <ul>
+                        <li><strong>Backend:</strong> Spring Boot 3.2.0</li>
+                        <li><strong>Template Engine:</strong> Thymeleaf</li>
+                        <li><strong>Build Tool:</strong> Maven</li>
+                        <li><strong>Java Version:</strong> 17</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>주요 기능</h3>
+                    <ul>
+                        <li>Spring MVC를 사용한 웹 요청 처리</li>
+                        <li>Thymeleaf를 이용한 동적 페이지 렌더링</li>
+                        <li>반응형 웹 디자인</li>
+                        <li>깔끔하고 모던한 UI</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; <span th:text="${#temporals.year(#temporals.createNow())}">2024</span> Spring Boot 웹 애플리케이션. All rights reserved.</p>
+        </footer>
+    </div>
+    <script th:src="@{/js/seasonal-animation.js}"></script>
+</body>
+</html>

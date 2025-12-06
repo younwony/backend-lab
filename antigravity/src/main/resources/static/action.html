@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Control | Antigravity</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="action-page">
+    <div class="scan-line"></div>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <div class="status-indicator online"></div>
+                <h1>SYSTEM CONTROL // <span class="accent-text">ANTIGRAVITY</span></h1>
+            </div>
+            <div class="header-right">
+                <span id="clock">00:00:00</span>
+                <a href="index.html" class="back-link">[ RETURN TO BASE ]</a>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Panel 1: System Status -->
+            <section class="panel status-panel">
+                <h2><span class="icon">📊</span> SYSTEM STATUS</h2>
+                <div class="status-grid">
+                    <div class="metric-box">
+                        <span class="label">CORE TEMP</span>
+                        <div class="value-display">
+                            <span id="temp-val">42</span><span class="unit">°C</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill" id="temp-bar" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">MEMORY</span>
+                        <div class="value-display">
+                            <span id="mem-val">12</span><span class="unit">%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="fill" id="mem-bar" style="width: 12%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <span class="label">NETWORK</span>
+                        <div class="value-display">
+                            <span id="net-val">890</span><span class="unit">Mbps</span>
+                        </div>
+                        <div class="chart-line" id="net-chart"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Panel 2: Action Controls -->
+            <section class="panel control-panel">
+                <h2><span class="icon">⚡</span> COMMAND CENTER</h2>
+                <div class="button-grid">
+                    <button class="action-btn primary" onclick="runSequence('init')">
+                        <span class="btn-content">INITIALIZE SEQUENCE</span>
+                        <span class="btn-glitch"></span>
+                    </button>
+                    <button class="action-btn secondary" onclick="runSequence('scan')">
+                        <span class="btn-content">DEEP SCAN</span>
+                    </button>
+                    <button class="action-btn warning" onclick="runSequence('purge')">
+                        <span class="btn-content">CACHE PURGE</span>
+                    </button>
+                    <button class="action-btn danger" onclick="runSequence('emergency')">
+                        <span class="btn-content">EMERGENCY STOP</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Panel 3: Terminal -->
+            <section class="panel terminal-panel">
+                <h2><span class="icon">💻</span> TERMINAL OUTPUT</h2>
+                <div class="terminal-window" id="terminal">
+                    <div class="line"><span class="prompt">></span> SYSTEM READY...</div>
+                    <div class="line"><span class="prompt">></span> WAITING FOR INPUT...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
