@@ -1,47 +1,15 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '4.0.0'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot'
 }
 
-group = 'dev.wony'
-version = '0.0.1-SNAPSHOT'
-description = 'macro'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
-}
+description = 'macro - Selenium WebDriver 기반 웹 자동화 매크로'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 
     // Selenium
     implementation 'org.seleniumhq.selenium:selenium-java:4.27.0'
 
     // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }
