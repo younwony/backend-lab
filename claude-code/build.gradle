@@ -2,15 +2,9 @@ plugins {
     id 'org.springframework.boot'
 }
 
-description = 'claude-code - 계절별 테마가 적용된 Spring Boot + Thymeleaf 웹 애플리케이션'
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-    // DevTools for hot reload
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    // Test - Web MVC Test
     testImplementation 'org.springframework.boot:spring-boot-webmvc-test'
 }

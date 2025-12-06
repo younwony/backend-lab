@@ -7,7 +7,6 @@ plugins {
 allprojects {
     group = 'dev.wony'
     version = '0.0.1-SNAPSHOT'
-
     repositories {
         mavenCentral()
     }
@@ -23,9 +22,23 @@ subprojects {
         }
     }
 
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(Test).configureEach {
+        jvmArgs '-Dfile.encoding=UTF-8'
+        useJUnitPlatform()
+    }
+
     dependencyManagement {
         imports {
             mavenBom 'org.springframework.boot:spring-boot-dependencies:4.0.0'
+        }
+        dependencies {
+            dependency 'com.squareup.okhttp3:okhttp:4.12.0'
+            dependency 'com.squareup.okhttp3:mockwebserver:4.12.0'
+            dependency 'org.apache.httpcomponents.client5:httpclient5:5.3'
         }
     }
 
@@ -36,18 +49,17 @@ subprojects {
         testCompileOnly 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
 
-        // Apache Commons (null-safe utilities)
+        // Commons
         implementation 'org.apache.commons:commons-lang3:3.14.0'
-        implementation 'org.apache.commons:commons-collections4:4.4'
-
-        // Google Guava (immutable collections, preconditions)
         implementation 'com.google.guava:guava:33.0.0-jre'
 
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    }
+        // Logging
+        implementation 'ch.qos.logback:logback-classic'
 
-    tasks.named('test') {
-        useJUnitPlatform()
+        // Test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.mockito:mockito-core'
+        testImplementation 'com.fasterxml.jackson.core:jackson-databind'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     }
 }

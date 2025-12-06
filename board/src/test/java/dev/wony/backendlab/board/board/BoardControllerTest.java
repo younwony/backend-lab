@@ -3,6 +3,7 @@ package dev.wony.backendlab.board.board;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.wony.backendlab.board.board.model.BoardDto;
 import dev.wony.backendlab.board.board.service.BoardService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,15 @@ class BoardControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
     private ObjectMapper objectMapper;
 
     @MockitoBean
     private BoardService boardService;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
 
     @Test
     @DisplayName("게시글 저장 요청 시 저장된 게시글을 반환한다")

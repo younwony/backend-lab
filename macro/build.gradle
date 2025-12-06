@@ -1,15 +1,21 @@
 plugins {
-    id 'org.springframework.boot'
+    id 'application'
 }
 
-description = 'macro - Selenium WebDriver 기반 웹 자동화 매크로'
+application {
+    mainClass = 'dev.wony.backendlab.macro.MacroApplication'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-
-    // Selenium
-    implementation 'org.seleniumhq.selenium:selenium-java:4.27.0'
-
-    // Test
-    testImplementation 'org.mockito:mockito-core'
+    implementation 'org.apache.httpcomponents.client5:httpclient5'
 }

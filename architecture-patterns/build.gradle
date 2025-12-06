@@ -1,18 +1,11 @@
-// 아키텍처 패턴 모듈
-// 디자인 패턴, 아키텍처 패턴 구현 및 테스트
-
 plugins {
     id 'org.springframework.boot'
 }
 
+bootJar.enabled = false
+jar.enabled = true
+
 dependencies {
     implementation project(':common')
-
     implementation 'org.springframework.boot:spring-boot-starter'
-
-    // 이벤트 기반 아키텍처 테스트용
-    // implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
-    // 캐싱 패턴 테스트용
-    // implementation 'org.springframework.boot:spring-boot-starter-cache'
 }

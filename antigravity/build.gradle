@@ -1,5 +1,1 @@
-description = 'antigravity - 글래스모피즘 디자인의 정적 웹사이트'
-
-// 정적 웹사이트 프로젝트이므로 추가 의존성이 없습니다
-dependencies {
-}
+description = 'antigravity'
