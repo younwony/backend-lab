@@ -23,3 +23,6 @@ include 'claude-code'
 
 // Antigravity - 정적 웹사이트
 include 'antigravity'
+
+// Spring Boot 4 Features - Spring Boot 4 신규 기능 테스트 (HTTP Interface 등)
+include 'spring-boot-4-features'

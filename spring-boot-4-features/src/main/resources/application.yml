@@ -1,0 +1,27 @@
+# Spring Boot 4 Features Module Configuration
+spring:
+  application:
+    name: spring-boot-4-features
+
+# HTTP Client Configuration
+http:
+  client:
+    jsonplaceholder:
+      base-url: https://jsonplaceholder.typicode.com
+
+# Logging
+logging:
+  level:
+    dev.wony.backendlab.boot4: DEBUG
+    org.springframework.web.client: DEBUG
+
+---
+# HTTP Service Groups Profile
+spring:
+  config:
+    activate:
+      on-profile: http-service-groups
+
+# Spring Boot 4에서는 application.properties로도 HTTP Service Groups 설정 가능
+# spring.http.client.service.group.jsonplaceholder.base-url=https://jsonplaceholder.typicode.com
+# spring.http.client.service.read-timeout=5s

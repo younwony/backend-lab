@@ -14,7 +14,13 @@
       "Bash(cmd.exe /c \"cd /d C:\\workspace\\intellij\\backend-lab && gradlew.bat :architecture-patterns:test --no-daemon\")",
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" status --short)",
       "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add build.gradle architecture-patterns/src/main/java/dev/wony/backendlab/patterns/ddd/product/domain/)",
-      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add build.gradle architecture-patterns/src/main/java/dev/wony/backendlab/patterns/ddd/product/domain/ architecture-patterns/src/test/java/dev/wony/backendlab/patterns/ddd/product/domain/vo/MoneyTest.java)"
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add build.gradle architecture-patterns/src/main/java/dev/wony/backendlab/patterns/ddd/product/domain/ architecture-patterns/src/test/java/dev/wony/backendlab/patterns/ddd/product/domain/vo/MoneyTest.java)",
+      "WebSearch",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:spring.io)",
+      "Bash(cmd.exe /c:*)",
+      "Bash(./gradlew :spring-boot-4-features:test:*)",
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add settings.gradle ARCHITECTURE.md spring-boot-4-features/)"
     ],
     "deny": [],
     "ask": []
