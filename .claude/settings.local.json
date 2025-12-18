@@ -20,9 +20,26 @@
       "WebFetch(domain:spring.io)",
       "Bash(cmd.exe /c:*)",
       "Bash(./gradlew :spring-boot-4-features:test:*)",
-      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add settings.gradle ARCHITECTURE.md spring-boot-4-features/)"
+      "Bash(git -C \"C:\\workspace\\intellij\\backend-lab\" add settings.gradle ARCHITECTURE.md spring-boot-4-features/)",
+      "WebFetch(domain:github.com)",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" add .mcp.json .claude/commands/confluence-api-doc.md)",
+      "Bash(claude mcp:*)",
+      "mcp__atlassian__atlassianUserInfo",
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "mcp__atlassian__getConfluenceSpaces",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" add ATLASSIAN-MCP-GUIDE.md)",
+      "Bash(dir /AD /B \"C:\\\\workspace\\\\intellij\\\\backend-lab\")",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" add .claude/commands/confluence-project-doc.md .claude/commands/confluence-api-spec.md .claude/commands/confluence-client-api.md ATLASSIAN-MCP-GUIDE.md)",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" add .claude/skills/confluence-docs.md ATLASSIAN-MCP-GUIDE.md)",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" clean -f .claude/commands/confluence-api-spec.md .claude/commands/confluence-client-api.md .claude/commands/confluence-project-doc.md nul)",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" rm --cached .mcp.json)",
+      "Bash(git -C \"C:\\\\workspace\\\\intellij\\\\backend-lab\" clean -f .mcp.json)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "atlassian"
+  ]
 }
