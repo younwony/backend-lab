@@ -319,4 +319,77 @@ public class HttpServiceGroupConfig {
 
 ---
 
-*Last Updated: 2025-12-10*
+## Claude Code Hooks 아키텍처
+
+### 개요
+
+Claude Code의 도구 사용 라이프사이클에 연결된 자동화 스크립트입니다.
+코드 품질 관리, 안전 장치, 테스트 자동화를 담당합니다.
+
+### Hook 실행 흐름
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                        Claude Code Hooks Pipeline                            │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ┌──────────────┐                                                           │
+│  │ SessionStart │──► session-context.sh                                     │
+│  │              │    (브랜치, 커밋, 수정파일 표시)                            │
+│  └──────────────┘                                                           │
+│                                                                              │
+│  ┌──────────────┐     ┌────────────────────────┐     ┌───────────────────┐  │
+│  │ PreToolUse   │     │ Bash 도구              │     │ block-dangerous   │  │
+│  │              │──►  │ ├─ 위험 명령 감지       │──►  │ -commands.sh      │  │
+│  │              │     │ └─ block / allow        │     │ (deny/allow)      │  │
+│  │              │     ├────────────────────────┤     ├───────────────────┤  │
+│  │              │──►  │ Edit|Write 도구         │──►  │ protect-files.sh  │  │
+│  │              │     │ ├─ 보호 파일 감지       │     │ (ask/allow)       │  │
+│  │              │     │ └─ ask / allow          │     │                   │  │
+│  └──────────────┘     └────────────────────────┘     └───────────────────┘  │
+│                                                                              │
+│  ┌──────────────┐     ┌────────────────────────┐                            │
+│  │ PostToolUse  │     │ Edit|Write (Java)       │                            │
+│  │              │──►  │ ├─ java-lint-check.sh   │  (패턴 매칭 8개 규칙)      │
+│  │              │     │ ├─ LLM prompt 리뷰      │  (SOLID, DTO, N+1 등)     │
+│  │              │     │ └─ auto-test-runner.sh  │  (async, 모듈별 테스트)    │
+│  └──────────────┘     └────────────────────────┘                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 파일 구조
+
+```
+.claude/
+├── settings.local.json              # hooks 설정 (PreToolUse, PostToolUse, SessionStart)
+├── hooks/
+│   ├── block-dangerous-commands.sh  # 위험 명령 차단 (rm -rf, force push 등)
+│   ├── protect-files.sh             # 보호 파일 수정 방지 (.env, gradlew 등)
+│   ├── java-lint-check.sh           # Java 코드 규칙 검사 (8개 패턴)
+│   ├── auto-test-runner.sh          # 테스트 자동 실행 (async)
+│   └── session-context.sh           # 세션 시작 컨텍스트
+├── commands/
+└── skills/
+```
+
+### Hook 유형별 데이터 흐름
+
+```
+┌─────────────┐       stdin (JSON)       ┌──────────────┐
+│ Claude Code │ ──────────────────────► │ Hook Script  │
+│             │                         │              │
+│             │ ◄────────────────────── │              │
+│             │       stdout (JSON)      │              │
+└─────────────┘                         └──────────────┘
+
+PreToolUse 입력:  { "tool_name": "Bash", "tool_input": { "command": "..." } }
+PreToolUse 출력:  { "decision": "block|ask|allow", "reason": "..." }
+
+PostToolUse 입력: { "tool_name": "Edit", "tool_input": { "file_path": "..." } }
+PostToolUse 출력: 피드백 텍스트 (Claude에게 전달)
+```
+
+---
+
+*Last Updated: 2026-02-03*

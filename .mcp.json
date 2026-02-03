@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "@ecubelabs/atlassian-mcp"
+      ],
+      "env": {}
+    }
+  }
+}
